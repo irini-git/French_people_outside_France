@@ -10,6 +10,8 @@ PDF_LOCAL_FILE = './data/2024-gouvernement-francais-etranger-rapport.pdf'
 INPUT_DATA_PICKLE = './data/df.pickle'
 BAR_CHART_COUNTRIES = './fig/bar_chart_countries.png'
 
+COUNTRY_LIMIT = 15
+
 class ReportData:
     def __init__(self):
         self.df = self.load_data()
@@ -27,35 +29,40 @@ class ReportData:
         Explore data via charts
         :return: save visualisations to png files
         """
-        top_limit = 15
-        # top_limit = input("There are 159 countries, how to plot? Default is 15: ")
-        #
-        # try:
-        #     top_limit = int(top_limit)
-        #     if top_limit > self.df.shape[0]:
-        #         print(f'The value ({top_limit}) will be limited to {top_limit} countries.')
-        #         top_limit = 15
-        #     else:
-        #         print(f'Chart will limit to {top_limit}.')
-        #
-        # except:
-        #     print(f"Did not recognise '{top_limit}' as a number, using defaul value (15).")
-        #     top_limit = 15
 
-        base = alt.Chart(self.df.head(top_limit)).encode(
-                 x=alt.X('Population 2023').title(''),
-                 y=alt.Y("Country").sort('-x').title(''),
-                 text='Population 2023',
-                 color=alt.condition(alt.datum['Population 2023'] > 100000, alt.value('red'), alt.value('steelblue'))
-             ).properties(
-                title={
-                  "text": ["Population of French People outside France in 2023"],
-                  "subtitle": ["Rapport du gouvernement 2024 sur la situation des Français de l’étranger"],
-                  "color": "black",
-                  "subtitleColor": "black"
-                }
-)
-        chart = base.mark_bar() + base.mark_text(align='left', dx=2)
+
+        def plot_inner_chart(df, title_comment):
+            """
+            Support function to plot inner chart
+            :param df: dataframe to plot a bar chart
+            :return: chart object
+            """
+
+            base_ = alt.Chart(df).encode(
+                     x=alt.X('Population 2023').title(''),
+                     y=alt.Y("Country").sort('-x').title(''),
+                     text='Population 2023',
+                     color=alt.condition(alt.datum['Population 2023'] > 100000, alt.value('red'), alt.value('steelblue'))
+                 ).properties(
+                    title={
+                      "text": [f"Population of French People outside France in 2023 {title_comment}"],
+                      "subtitle": ["Rapport du gouvernement 2024 sur la situation des Français de l’étranger"],
+                      "color": "black",
+                      "subtitleColor": "black"
+                    }
+    )
+            chart_ = base_.mark_bar() + base_.mark_text(align='left', dx=2)
+            return chart_
+
+        chart_top = plot_inner_chart(
+                        df=self.df.head(COUNTRY_LIMIT),
+                        title_comment=f'(top {COUNTRY_LIMIT})'
+                        )
+        chart_bottom = plot_inner_chart(
+                        df=self.df.tail(COUNTRY_LIMIT),
+                        title_comment=f'(bottom {COUNTRY_LIMIT})')
+
+        chart = chart_top | chart_bottom
 
         chart.save(BAR_CHART_COUNTRIES)
 

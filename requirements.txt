@@ -1,2 +1,3 @@
-tabula-py
-jpype1
+pdfplumber
+altair
+vl-convert-python

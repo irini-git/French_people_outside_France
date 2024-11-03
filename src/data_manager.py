@@ -2,15 +2,18 @@ import pdfplumber
 import os
 import pandas as pd
 import itertools
+import altair as alt
 
 # URL from which PDF to be downloaded
 PDF_URL = 'https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf'
 PDF_LOCAL_FILE = './data/2024-gouvernement-francais-etranger-rapport.pdf'
 INPUT_DATA_PICKLE = './data/df.pickle'
+BAR_CHART_COUNTRIES = './fig/bar_chart_countries.png'
 
 class ReportData:
     def __init__(self):
         self.df = self.load_data()
+        self.explore_data()
 
     def get_current_location(self):
         """
@@ -18,6 +21,43 @@ class ReportData:
         :return: prints the current directory
         """
         print(os.getcwd())
+
+    def explore_data(self):
+        """
+        Explore data via charts
+        :return: save visualisations to png files
+        """
+        top_limit = 15
+        # top_limit = input("There are 159 countries, how to plot? Default is 15: ")
+        #
+        # try:
+        #     top_limit = int(top_limit)
+        #     if top_limit > self.df.shape[0]:
+        #         print(f'The value ({top_limit}) will be limited to {top_limit} countries.')
+        #         top_limit = 15
+        #     else:
+        #         print(f'Chart will limit to {top_limit}.')
+        #
+        # except:
+        #     print(f"Did not recognise '{top_limit}' as a number, using defaul value (15).")
+        #     top_limit = 15
+
+        base = alt.Chart(self.df.head(top_limit)).encode(
+                 x=alt.X('Population 2023').title(''),
+                 y=alt.Y("Country").sort('-x').title(''),
+                 text='Population 2023',
+                 color=alt.condition(alt.datum['Population 2023'] > 100000, alt.value('red'), alt.value('steelblue'))
+             ).properties(
+                title={
+                  "text": ["Population of French People outside France in 2023"],
+                  "subtitle": ["Rapport du gouvernement 2024 sur la situation des Français de l’étranger"],
+                  "color": "black",
+                  "subtitleColor": "black"
+                }
+)
+        chart = base.mark_bar() + base.mark_text(align='left', dx=2)
+
+        chart.save(BAR_CHART_COUNTRIES)
 
 
     def load_data(self):

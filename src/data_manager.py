@@ -23,14 +23,10 @@ class ReportData:
         :return:
         """
 
-        # Open the PDF file
+        # Open the PDF file and extract tables
         with pdfplumber.open(PDF_LOCAL_FILE) as pdf:
-            # Go through each page
 
-            for page in pdf.pages:
-                 # Get tables from the current page
-                 if page.page_number in [151,152, 153, 154, 155]:
-                     tables = page.extract_table()
-
-                     # Print the table data
-                     print(tables)
+            # Extract tables using list comprehension
+            # [ expression for item in list if conditional ]
+            data = [page.extract_table() for page in pdf.pages if page.page_number in [151,152, 153, 154, 155]]
+            print(data)

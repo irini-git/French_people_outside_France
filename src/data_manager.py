@@ -20,8 +20,8 @@ class ReportData:
 
 
     def load_data(self):
-        """
-        :return:
+        """ Loads data from local pdf file and transforms to dataframe
+        :return: dataframe with data
         """
 
         # Open the PDF file and extract tables

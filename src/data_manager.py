@@ -1,8 +1,13 @@
+from fnmatch import translate
+
 import pdfplumber
 import os
 import pandas as pd
 import itertools
 import altair as alt
+from pandas import concat
+from vega_datasets import data
+import requests
 
 # URL from which PDF to be downloaded
 PDF_URL = 'https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf'
@@ -15,7 +20,6 @@ COUNTRY_LIMIT = 15
 class ReportData:
     def __init__(self):
         self.df = self.load_data()
-        self.explore_data()
 
     def get_current_location(self):
         """
@@ -24,29 +28,76 @@ class ReportData:
         """
         print(os.getcwd())
 
+    def plot_geo_distribution(self):
+        """
+
+        :return:
+        """
+
+        values = pd.DataFrame({"name": ['Spain', 'Norway', 'France'],
+                               "fantasy_value": [137.5, 20.4, 70.4]})
+
+        countries = alt.topo_feature(data.world_110m.url, "countries")
+        # https://en.wikipedia.org/wiki/ISO_3166-1_numeric
+        country_codes = pd.read_csv(
+            "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
+        )
+
+        background = alt.Chart(countries).mark_geoshape(fill="lightgray")
+
+        # we transform twice, first from "ISO 3166-1 numeric" to name, then from name to value
+        foreground = (
+            alt.Chart(countries)
+            .mark_geoshape()
+            .transform_lookup(
+                lookup="id",
+                from_=alt.LookupData(data=country_codes, key="country-code", fields=["name"]),
+            )
+            .transform_lookup(
+                lookup="name",
+                from_=alt.LookupData(data=self.df, key="name", fields=["Population 2023"]),
+            )
+            .encode(
+                fill=alt.Color(
+                    "Population 2023:Q",
+                    scale=alt.Scale(scheme="reds"),
+                )
+            )
+        )
+
+        chart = (
+            (background + foreground)
+            .properties(width=600, height=600)
+            .project(
+                type="equirectangular"
+            )
+        )
+
+        chart.save('./fig/test.png')
+
     def explore_data(self):
         """
         Explore data via charts
         :return: save visualisations to png files
         """
 
-
         def plot_inner_chart(df, title_comment):
             """
             Support function to plot inner chart
+            :param title_comment: information about the subset of countries, default 15
             :param df: dataframe to plot a bar chart
-            :return: chart object
+            :return: a chart object
             """
 
             base_ = alt.Chart(df).encode(
                      x=alt.X('Population 2023').title(''),
-                     y=alt.Y("Country").sort('-x').title(''),
+                     y=alt.Y("Country FR").sort('-x').title(''),
                      text='Population 2023',
                      color=alt.condition(alt.datum['Population 2023'] > 100000, alt.value('red'), alt.value('steelblue'))
                  ).properties(
                     title={
                       "text": [f"Population of French People outside France in 2023 {title_comment}"],
-                      "subtitle": ["Rapport du gouvernement 2024 sur la situation des Français de l’étranger"],
+                      "subtitle": ["Government report 2024"],
                       "color": "black",
                       "subtitleColor": "black"
                     }
@@ -77,7 +128,12 @@ class ReportData:
         # Check if the file exists
         if os.path.exists(INPUT_DATA_PICKLE):
             print("Load from pickle file.")
-            return pd.read_pickle(INPUT_DATA_PICKLE)
+            df = pd.read_pickle(INPUT_DATA_PICKLE)
+            translate_country = pd.read_csv('./data/translate_country_name.txt', sep=';')
+
+            df = pd.merge(df, translate_country, on="Country FR")
+
+            return df
 
         else:
             print("Load data from local PDF and pickle.")
@@ -94,7 +150,7 @@ class ReportData:
 
             # Create a dataframe based on PDF table
             df = pd.DataFrame(pdf_tables[3:])
-            df.columns = ['Rang', 'Country', 'Population 2023', 'Change 2023/2022 (%)', 'col1', 'col2']
+            df.columns = ['Rang', 'Country FR', 'Population 2023', 'Change 2023/2022 (%)', 'col1', 'col2']
             df.drop(['col1', 'col2'], axis=1, inplace=True)
 
             # Change datatypes
@@ -108,6 +164,10 @@ class ReportData:
             # Convert columns  to numeric
             columns_numeric = ['Rang', 'Population 2023', 'Change 2023/2022 (%)']
             df[columns_numeric] = df[columns_numeric].apply(pd.to_numeric)
+
+            # Country names are in French, create a column with English names
+
+            print(df.head(10))
 
             df.to_pickle(INPUT_DATA_PICKLE)
 

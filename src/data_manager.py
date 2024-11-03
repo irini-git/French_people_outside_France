@@ -1,5 +1,7 @@
 import pdfplumber
 import os
+import pandas as pd
+import itertools
 
 # URL from which PDF to be downloaded
 PDF_URL = 'https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf'
@@ -7,7 +9,6 @@ PDF_LOCAL_FILE = './data/2024-gouvernement-francais-etranger-rapport.pdf'
 
 class ReportData:
     def __init__(self):
-        self.get_current_location()
         self.load_data()
 
     def get_current_location(self):
@@ -28,5 +29,10 @@ class ReportData:
 
             # Extract tables using list comprehension
             # [ expression for item in list if conditional ]
-            data = [page.extract_table() for page in pdf.pages if page.page_number in [151,152, 153, 154, 155]]
-            print(data)
+            pdf_tables = [page.extract_table() for page in pdf.pages if page.page_number in [151,152, 153, 154, 155]]
+
+        # Unpack lists
+        pdf_tables = list(itertools.chain(*pdf_tables))
+
+        print(pdf_tables)
+        print(pdf_tables[3:])

@@ -205,37 +205,31 @@ class ReportData:
             df['Change 2023/2022 (%)'] = df['Change 2023/2022 (%)'].str.replace(',', '.')
 
             # Missing entries
+            # Located a deficiency in how pdfplumber operator, append missing values manually.
             df_missing_entries = pd.DataFrame({
-                'Rang': ['5', '51'],
-                'Country FR': ['Canada', 'Cambodge'],
-                'Population 2023': [108847, 4967],
-                'Change 2023/2022 (%)' : [0.65, -0.16]
+                'Rang': ['5', '51', '97', '143'],
+                'Country FR': ['Canada', 'Cambodge', 'Slovaquie', 'Zambie'],
+                'Population 2023': [108847, 4967, 930, 185],
+                'Change 2023/2022 (%)' : [0.65, -0.16, 7.31, -20.54]
                 }
             )
 
             df = pd.concat([df, df_missing_entries])
-            df['Rang'] = df['Rang'].apply(pd.to_numeric)
-            df = df.sort_values('Rang')
-
-            df['row_number'] = range(len(df))
-            df['test'] = df.apply(lambda row: int(row.Rang) == row.row_number+1, axis=1)
-
-            print(df[['Rang', 'Country FR', 'row_number', 'test']].query('test'))
-
-
 
             # Convert columns  to numeric
             columns_numeric = ['Rang', 'Population 2023', 'Change 2023/2022 (%)']
             df[columns_numeric] = df[columns_numeric].apply(pd.to_numeric)
 
-            # Located a deficiency in how pdfplumber operates
-            # Some rows are not uploaded
+            # Sort by rang
+            # We added some values manually and the rang is not ordered
+            df = df.sort_values(by=['Rang'], ascending=True)
 
 
             # Country names are in French, create a column with English names
             translate_country = pd.read_csv(MAPPING_COUNTRIES, sep=';')
             df = pd.merge(df, translate_country, on="Country FR")
 
-            # df.to_pickle(INPUT_DATA_PICKLE)
+            # Pickle
+            df.to_pickle(INPUT_DATA_PICKLE)
 
         return df

@@ -1,4 +1,8 @@
 Country FR;name
+Canada;Canada
+Cambodge;Cambodia
+Slovaquie;Slovakia
+Zambie;Zambia
 Suisse;Switzerland
 États-Unis;United States of America
 Royaume-Uni;United Kingdom of Great Britain and Northern Ireland

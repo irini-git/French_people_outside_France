@@ -1,9 +1,7 @@
 # French people outside France
 French people living outside France as per government report 2024.
-Main insights 
-- The top countries are Switzerland, the United States of America, the United Kingdom, and Belgium.
-- 
-
+The countries with the highest population are Switzerland, the United States of America, 
+the United Kingdom, Belgium, and Canada.
 
 ## Project structure
 .

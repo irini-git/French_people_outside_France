@@ -15,7 +15,8 @@ PDF_LOCAL_FILE = './data/2024-gouvernement-francais-etranger-rapport.pdf'
 INPUT_DATA_PICKLE = './data/df.pickle'
 MAPPING_COUNTRIES = './data/translate_country_name.txt'
 BAR_CHART_COUNTRIES = './fig/bar_chart_countries.png'
-GEO_CHART_WORLD = './fig/geo_chart_world.png'
+GEO_CHART_POPULATION_WORLD = './fig/geo_chart_population_world.png'
+GEO_CHART_POPULATION_EUROPE = './fig/geo_chart_population_europe.png'
 
 COUNTRY_LIMIT = 15
 
@@ -32,8 +33,8 @@ class ReportData:
 
     def plot_geo_distribution(self):
         """
-
-        :return:
+        Plots geo chart
+        :return: chart of populaton
         """
 
         countries = alt.topo_feature(data.world_110m.url, "countries")
@@ -42,48 +43,75 @@ class ReportData:
             "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
         )
 
-        background = alt.Chart(countries).mark_geoshape(fill="lightgray")
+        def plot_inner_geo_chart(filename_save_data, view):
 
-        # we transform twice, first from "ISO 3166-1 numeric" to name, then from name to value
-        foreground = (
-            alt.Chart(countries)
-            .mark_geoshape()
-            .transform_lookup(
-                lookup="id",
-                from_=alt.LookupData(data=country_codes, key="country-code", fields=["name"]),
-            )
-            .transform_lookup(
-                lookup="name",
-                from_=alt.LookupData(data=self.df, key="name", fields=["Population 2023"]),
-            )
-            .encode(
-                fill=alt.Color(
-                    "Population 2023:Q",
-                    scale=alt.Scale(scheme="reds"),
-                    legend=alt.Legend(
-                        orient='bottom-left',
-                        direction='horizontal',
-                        titleColor='black', titleFontSize=14,
-                        gradientLength=560, gradientThickness=20)
+            # Legend direction
+            if view=='world':
+                direction_ = 'horizontal'
+                orient_ = 'bottom-left'
+            else:
+                direction_ = 'vertical'
+                orient_ = 'right'
+
+            # background
+            background = alt.Chart(countries).mark_geoshape(fill="lightgray")
+
+            # we transform twice, first from "ISO 3166-1 numeric" to name, then from name to value
+            foreground = (
+                alt.Chart(countries)
+                .mark_geoshape()
+                .transform_lookup(
+                    lookup="id",
+                    from_=alt.LookupData(data=country_codes, key="country-code", fields=["name"]),
                 )
+                .transform_lookup(
+                    lookup="name",
+                    from_=alt.LookupData(data=self.df, key="name", fields=["Population 2023"]),
+                )
+                .encode(
+                    fill=alt.Color(
+                        "Population 2023:Q",
+                        scale=alt.Scale(scheme="reds"),
+                        legend=alt.Legend(
+                            orient=orient_,
+                            direction=direction_,
+                            titleColor='black', titleFontSize=14,
+                            gradientLength=560, gradientThickness=20)
+                    )
+                )
+            ).properties(
+                title={
+                          "text": [f"Population of French People outside France in 2023"],
+                          "subtitle": ["Government report 2024"],
+                          "color": "black",
+                          "subtitleColor": "black"
+                        }
             )
-        ).properties(
-            title={
-                      "text": [f"Population of French People outside France in 2023"],
-                      "subtitle": ["Government report 2024"],
-                      "color": "black",
-                      "subtitleColor": "black"
-                    }
-        )
-        chart = (
-            (background + foreground)
-            .properties(width=600, height=600)
-            .project(
-                type="equirectangular"
-            )
-        )
 
-        chart.save(GEO_CHART_WORLD)
+            if view == 'world':
+                chart = (
+                    (background + foreground)
+                    .properties(width=600, height=600)
+                    .project(
+                        type="equirectangular"
+                    )
+                )
+            else:
+                chart = (
+                    (background + foreground)
+                    .properties(width=600, height=600)
+                    .project(
+                        type="equalEarth",
+                        scale=800,
+                        translate=[200, 1000],
+                    )
+                )
+
+            chart.save(filename_save_data)
+
+        # World and Europe view
+        plot_inner_geo_chart(GEO_CHART_POPULATION_WORLD, 'world')
+        plot_inner_geo_chart(GEO_CHART_POPULATION_EUROPE, 'europe')
 
     def explore_data(self):
         """

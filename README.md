@@ -14,7 +14,7 @@ the United Kingdom, Belgium, and Canada.
 ```
 
 ## Reference
-Download the report from 
+Download the report from and put into 'data' folder
 <a href="https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf">Rapport du gouvernement 2024 sur la situation des Français de l’étranger</a> <br>
 see the section V. STATISTIQUES : FRANÇAIS INSCRITS AU REGISTRE 
 

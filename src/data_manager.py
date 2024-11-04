@@ -1,13 +1,11 @@
-from fnmatch import translate
+from traceback import print_tb
 
 import pdfplumber
 import os
 import pandas as pd
 import itertools
 import altair as alt
-from pandas import concat
 from vega_datasets import data
-import requests
 
 # URL from which PDF to be downloaded
 PDF_URL = 'https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf'
@@ -17,6 +15,8 @@ MAPPING_COUNTRIES = './data/translate_country_name.txt'
 BAR_CHART_COUNTRIES = './fig/bar_chart_countries.png'
 GEO_CHART_POPULATION_WORLD = './fig/geo_chart_population_world.png'
 GEO_CHART_POPULATION_EUROPE = './fig/geo_chart_population_europe.png'
+GEO_CHART_RATE_WORLD = './fig/geo_chart_rate_world.png'
+GEO_CHART_RATE_EUROPE = './fig/geo_chart_rate_europe.png'
 
 COUNTRY_LIMIT = 15
 
@@ -43,9 +43,16 @@ class ReportData:
             "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
         )
 
-        def plot_inner_geo_chart(filename_save_data, view):
+        def plot_inner_geo_chart(filename_save_data, view, data):
 
-            # Legend direction
+            #
+            if data == 'population':
+                source = 'Population 2023'
+                scheme_ = 'reds'
+            else:
+                source = 'Change 2023/2022 (%)'
+                scheme_ = 'blueorange'
+
             if view=='world':
                 direction_ = 'horizontal'
                 orient_ = 'bottom-left'
@@ -66,12 +73,12 @@ class ReportData:
                 )
                 .transform_lookup(
                     lookup="name",
-                    from_=alt.LookupData(data=self.df, key="name", fields=["Population 2023"]),
+                    from_=alt.LookupData(data=self.df, key="name", fields=[f"{source}"]),
                 )
                 .encode(
                     fill=alt.Color(
-                        "Population 2023:Q",
-                        scale=alt.Scale(scheme="reds"),
+                        f"{source}:Q",
+                        scale=alt.Scale(scheme=scheme_),
                         legend=alt.Legend(
                             orient=orient_,
                             direction=direction_,
@@ -110,8 +117,11 @@ class ReportData:
             chart.save(filename_save_data)
 
         # World and Europe view
-        plot_inner_geo_chart(GEO_CHART_POPULATION_WORLD, 'world')
-        plot_inner_geo_chart(GEO_CHART_POPULATION_EUROPE, 'europe')
+        plot_inner_geo_chart(GEO_CHART_POPULATION_WORLD, 'world', 'population')
+        plot_inner_geo_chart(GEO_CHART_POPULATION_EUROPE, 'europe', 'population')
+
+        plot_inner_geo_chart(GEO_CHART_RATE_EUROPE, 'europe', 'rate')
+        plot_inner_geo_chart(GEO_CHART_RATE_WORLD, 'world', 'rate')
 
     def explore_data(self):
         """
@@ -166,12 +176,7 @@ class ReportData:
         # Check if the file exists
         if os.path.exists(INPUT_DATA_PICKLE):
             print("Load from pickle file.")
-            df = pd.read_pickle(INPUT_DATA_PICKLE)
-            translate_country = pd.read_csv(MAPPING_COUNTRIES, sep=';')
-
-            df = pd.merge(df, translate_country, on="Country FR")
-
-            return df
+            return pd.read_pickle(INPUT_DATA_PICKLE)
 
         else:
             print("Load data from local PDF and pickle.")
@@ -181,7 +186,7 @@ class ReportData:
 
                 # Extract tables using list comprehension
                 # [expression for item in a list if conditional]
-                pdf_tables = [page.extract_table() for page in pdf.pages if page.page_number in [151,152, 153, 154, 155]]
+                pdf_tables = [page.extract_table() for page in pdf.pages if page.page_number in [151, 152, 153, 154, 155]]
 
             # Unpack lists
             pdf_tables = list(itertools.chain(*pdf_tables))
@@ -199,14 +204,38 @@ class ReportData:
             df['Change 2023/2022 (%)'] = df['Change 2023/2022 (%)'].str.replace('%', '')
             df['Change 2023/2022 (%)'] = df['Change 2023/2022 (%)'].str.replace(',', '.')
 
+            # Missing entries
+            df_missing_entries = pd.DataFrame({
+                'Rang': ['5', '51'],
+                'Country FR': ['Canada', 'Cambodge'],
+                'Population 2023': [108847, 4967],
+                'Change 2023/2022 (%)' : [0.65, -0.16]
+                }
+            )
+
+            df = pd.concat([df, df_missing_entries])
+            df['Rang'] = df['Rang'].apply(pd.to_numeric)
+            df = df.sort_values('Rang')
+
+            df['row_number'] = range(len(df))
+            df['test'] = df.apply(lambda row: int(row.Rang) == row.row_number+1, axis=1)
+
+            print(df[['Rang', 'Country FR', 'row_number', 'test']].query('test'))
+
+
+
             # Convert columns  to numeric
             columns_numeric = ['Rang', 'Population 2023', 'Change 2023/2022 (%)']
             df[columns_numeric] = df[columns_numeric].apply(pd.to_numeric)
 
+            # Located a deficiency in how pdfplumber operates
+            # Some rows are not uploaded
+
+
             # Country names are in French, create a column with English names
+            translate_country = pd.read_csv(MAPPING_COUNTRIES, sep=';')
+            df = pd.merge(df, translate_country, on="Country FR")
 
-            print(df.head(10))
-
-            df.to_pickle(INPUT_DATA_PICKLE)
+            # df.to_pickle(INPUT_DATA_PICKLE)
 
         return df

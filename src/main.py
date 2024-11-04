@@ -4,7 +4,7 @@ from data_manager import ReportData
 report = ReportData()
 
 # Explore data via visualizations
-report.explore_data()
-report.plot_geo_distribution()
+# report.explore_data()
+# report.plot_geo_distribution()
 
 # END ----------------

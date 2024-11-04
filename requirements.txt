@@ -1,4 +1,3 @@
 pdfplumber
 altair
 vl-convert-python
-vega_datasets

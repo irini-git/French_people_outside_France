@@ -13,7 +13,9 @@ import requests
 PDF_URL = 'https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf'
 PDF_LOCAL_FILE = './data/2024-gouvernement-francais-etranger-rapport.pdf'
 INPUT_DATA_PICKLE = './data/df.pickle'
+MAPPING_COUNTRIES = './data/translate_country_name.txt'
 BAR_CHART_COUNTRIES = './fig/bar_chart_countries.png'
+GEO_CHART_WORLD = './fig/geo_chart_world.png'
 
 COUNTRY_LIMIT = 15
 
@@ -34,11 +36,8 @@ class ReportData:
         :return:
         """
 
-        values = pd.DataFrame({"name": ['Spain', 'Norway', 'France'],
-                               "fantasy_value": [137.5, 20.4, 70.4]})
-
         countries = alt.topo_feature(data.world_110m.url, "countries")
-        # https://en.wikipedia.org/wiki/ISO_3166-1_numeric
+
         country_codes = pd.read_csv(
             "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
         )
@@ -61,10 +60,21 @@ class ReportData:
                 fill=alt.Color(
                     "Population 2023:Q",
                     scale=alt.Scale(scheme="reds"),
+                    legend=alt.Legend(
+                        orient='bottom-left',
+                        direction='horizontal',
+                        titleColor='black', titleFontSize=14,
+                        gradientLength=560, gradientThickness=20)
                 )
             )
+        ).properties(
+            title={
+                      "text": [f"Population of French People outside France in 2023"],
+                      "subtitle": ["Government report 2024"],
+                      "color": "black",
+                      "subtitleColor": "black"
+                    }
         )
-
         chart = (
             (background + foreground)
             .properties(width=600, height=600)
@@ -73,7 +83,7 @@ class ReportData:
             )
         )
 
-        chart.save('./fig/test.png')
+        chart.save(GEO_CHART_WORLD)
 
     def explore_data(self):
         """
@@ -129,7 +139,7 @@ class ReportData:
         if os.path.exists(INPUT_DATA_PICKLE):
             print("Load from pickle file.")
             df = pd.read_pickle(INPUT_DATA_PICKLE)
-            translate_country = pd.read_csv('./data/translate_country_name.txt', sep=';')
+            translate_country = pd.read_csv(MAPPING_COUNTRIES, sep=';')
 
             df = pd.merge(df, translate_country, on="Country FR")
 

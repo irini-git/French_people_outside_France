@@ -4,13 +4,14 @@ The countries with the highest population are Switzerland, the United States of 
 the United Kingdom, Belgium, and Canada.
 
 ## Project structure
-.
+```
 ├── data                    # Input data (`pdf` and `pkl`)
 ├── src                     # Source files 
 ├── fig                     # Charts
 ├── requirements.txt        
 ├── LICENSE
 └── README.md
+```
 
 ## Reference
 <a href="https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvernement-francais-etranger-rapport.pdf">Rapport du gouvernement 2024 sur la situation des Français de l’étranger</a> <br>

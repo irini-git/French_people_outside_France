@@ -120,7 +120,6 @@ class ReportData:
         plot_inner_geo_chart(GEO_CHART_POPULATION_WORLD, 'world', 'population')
         plot_inner_geo_chart(GEO_CHART_POPULATION_EUROPE, 'europe', 'population')
 
-        plot_inner_geo_chart(GEO_CHART_RATE_EUROPE, 'europe', 'rate')
         plot_inner_geo_chart(GEO_CHART_RATE_WORLD, 'world', 'rate')
 
     def explore_data(self):

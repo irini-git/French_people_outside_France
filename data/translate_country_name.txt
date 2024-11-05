@@ -31,7 +31,7 @@ Thaïlande;Thailand
 Turquie;Türkiye
 Singapour;Singapore
 Japon;Japan
-Argentine;Argentine
+Argentine;Argentine, the Republic
 Irlande;Ireland
 Maurice;Mauritius
 Autriche;Austria
@@ -52,10 +52,10 @@ Nouvelle-Zélande;New Zealand
 Qatar;Qatar
 Colombie;Colombia
 Mali;Mali
-République tchèque
+République Tchèque;Czechia
 Roumanie;Romania
 Djibouti;Djibouti
-Norvège;Norway
+Norvège;Norway, the Kingdom of
 Congo;Congo
 Pérou;Peru
 Indonésie;Indonesia

@@ -1,2 +1,5 @@
-Kosovo is missing in mapping
-Niger was not mapped
+Q - What are the countries with the most French (outside of France)?
+Q - What is the total population of France
+Q - What is the total population in those countries?
+Q - Francophonie report?
+Q - Have to create a manual mapping to translate the name of the country

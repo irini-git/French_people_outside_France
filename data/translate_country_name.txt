@@ -31,7 +31,7 @@ Thaïlande;Thailand
 Turquie;Türkiye
 Singapour;Singapore
 Japon;Japan
-Argentine;Argentine, the Republic
+Argentine;Argentina
 Irlande;Ireland
 Maurice;Mauritius
 Autriche;Austria

@@ -7,4 +7,6 @@ report = ReportData()
 report.explore_data()
 # report.plot_geo_distribution()
 
+# Enrich data with global information
+
 # END ----------------

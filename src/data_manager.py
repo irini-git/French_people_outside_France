@@ -31,10 +31,13 @@ class ReportData:
         """
         print(os.getcwd())
 
+    def enrich_with_global_data(self):
+        pass
+
     def plot_geo_distribution(self):
         """
-        Plots geo chart
-        :return: chart of populaton
+        Plots a geo chart
+        :return: the chart of population as a png file
         """
 
         countries = alt.topo_feature(data.world_110m.url, "countries")
@@ -219,7 +222,7 @@ class ReportData:
             columns_numeric = ['Rang', 'Population 2023', 'Change 2023/2022 (%)']
             df[columns_numeric] = df[columns_numeric].apply(pd.to_numeric)
 
-            # Sort by rang
+            # Sort by rank
             # We added some values manually and the rang is not ordered
             df = df.sort_values(by=['Rang'], ascending=True)
 

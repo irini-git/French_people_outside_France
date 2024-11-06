@@ -1,4 +1,4 @@
-Country FR;name
+Country FR;name;population
 Canada;Canada
 Cambodge;Cambodia
 Slovaquie;Slovakia

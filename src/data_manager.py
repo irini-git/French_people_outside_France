@@ -12,6 +12,9 @@ PDF_URL = 'https://francais-du-monde.org/wp-content/uploads/2022/11/2024-gouvern
 PDF_LOCAL_FILE = './data/2024-gouvernement-francais-etranger-rapport.pdf'
 INPUT_DATA_PICKLE = './data/df.pickle'
 MAPPING_COUNTRIES = './data/translate_country_name.txt'
+
+WORLD_DATA = './data/world_population.csv'
+
 BAR_CHART_COUNTRIES = './fig/bar_chart_countries.png'
 GEO_CHART_POPULATION_WORLD = './fig/geo_chart_population_world.png'
 GEO_CHART_POPULATION_EUROPE = './fig/geo_chart_population_europe.png'
@@ -32,7 +35,25 @@ class ReportData:
         print(os.getcwd())
 
     def enrich_with_global_data(self):
-        pass
+        """ Load country name, country code (ISO 3166-1 alpha-3) and population as for 2023.
+        :return:
+        """
+
+        # Load data from file
+        df_world_population = pd.read_csv(WORLD_DATA)
+
+        # Drop non-used columns
+
+        with pd.option_context('display.max_rows', None, 'display.max_columns',
+                               None):  # more options can be specified also
+            print(df_world_population.columns)
+            print(df_world_population[['Country Name', 'Country Code']])
+            print('-' * 30)
+
+        # Merge with master data
+        # print(self.df.head(2))
+
+        # self.df = pd.merge(self.df, df_world_population, on='Country Code')
 
     def plot_geo_distribution(self):
         """

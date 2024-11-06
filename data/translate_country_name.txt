@@ -1,164 +1,165 @@
-Country FR;name;population
-Canada;Canada
-Cambodge;Cambodia
-Slovaquie;Slovakia
-Zambie;Zambia
-Suisse;Switzerland
-États-Unis;United States of America
-Royaume-Uni;United Kingdom of Great Britain and Northern Ireland
-Belgique;Belgium
-Allemagne;Germany
-Espagne;Spain
-Israël;Israel
-Maroc;Morocco
-Italie;Italy
-Luxembourg;Luxembourg
-Algérie;Algeria
-Emirats arabes unis;United Arab Emirates
-Pays-Bas;Netherlands, Kingdom of the
-Australie;Australia
+Country FR;name;Country Code
+Canada;Canada;CAN
+Cambodge;Cambodia;KHM
+Slovaquie;Slovak Republic;SVK
+Zambie;Zambia;ZMB
+Suisse;Switzerland;CHE
+États-Unis;United States of America;USA
+Royaume-Uni;United Kingdom of Great Britain and Northern Ireland;GBR
+Belgique;Belgium;BEL
+Allemagne;Germany;DEU
+Espagne;Spain;ESP
+Israël;Israel;ISR
+Maroc;Morocco;MAR
+Italie;Italy;ITA
+Luxembourg;Luxembourg;LUX
+Algérie;Algeria;DZA
+Emirats arabes unis;United Arab Emirates;ARE
+Pays-Bas;Netherlands, Kingdom of the;NLD
+Australie;Australia;AUS
 Israël/Territoires palestiniens;Palestine, State of
 Chine;China
-Mexique;Mexico
-Sénégal;Senegal
-Tunisie;Tunisia
-Liban;Lebanon
-Portugal;Portugal
-Côte d'Ivoire;Côte d'Ivoire
-Madagascar;Madagascar
-Brésil;Brazil
-Thaïlande;Thailand
+Mexique;Mexico;MEX
+Sénégal;Senegal;SEN
+Tunisie;Tunisia;TUN
+Liban;Lebanon;LBN
+Portugal;Portugal;PRT
+Côte d'Ivoire;Côte d'Ivoire;CIV
+Madagascar;Madagascar;MDG
+Brésil;Brazil;BRA
+Thaïlande;Thailand;THA
 Turquie;Türkiye
-Singapour;Singapore
-Japon;Japan
-Argentine;Argentina
-Irlande;Ireland
-Maurice;Mauritius
-Autriche;Austria
-Chili;Chile
-Suède;Sweden
-Grèce;Greece
-Gabon;Gabon
-Viêt Nam;Viet Nam
-Inde;India
-Monaco;Monaco
-Afrique du Sud;South Africa
-Egypte;Egypt
-Danemark;Denmark
-Pologne;Poland
-Arabie saoudite;Saudi Arabia
-Cameroun;Cameroon
-Nouvelle-Zélande;New Zealand
-Qatar;Qatar
-Colombie;Colombia
-Mali;Mali
-République Tchèque;Czechia
-Roumanie;Romania
-Djibouti;Djibouti
-Norvège;Norway, the Kingdom of
-Congo;Congo
-Pérou;Peru
-Indonésie;Indonesia
-Russie;Russian Federation
-Corée du Sud;Korea, Republic of
-République dominicaine;Dominican Republic
-Finlande;Finland
-Philippines;Philippines
-Bénin;Benin
-Malaisie;Malaysia
-Taïwan;Taiwan, Province of China
-Burkina;Burkina Faso
-Equateur;Ecuador
-Costa Rica;Costa Rica
-Togo:Togo
-Hongrie;Hungary
-Rép. Démocratique du Congo;Congo, Democratic Republic of the
-Guinée;Guinea
-Vanuatu;Vanuatu
-Andorre;Andorra
-Uruguay;Uruguay
-Venezuela;Venezuela, Bolivarian Republic of
-Laos;Lao People's Democratic Republic
-Serbie;Serbia
-Kenya;Kenya
-Comores;Comoros
-Panama;Panama
-Bulgarie;Bulgaria
+Singapour;Singapore;SGP
+Japon;Japan;JPN
+Argentine;Argentina;ARG
+Irlande;Ireland;IRL
+Maurice;Mauritius;MUS
+Autriche;Austria;AUT
+Chili;Chile;CHL
+Suède;Sweden;SWE
+Grèce;Greece;GRC
+Gabon;Gabon;GAB
+Viêt Nam;Viet Nam;VNM
+Inde;India;IND
+Monaco;Monaco;MCO
+Afrique du Sud;South Africa;ZAF
+Egypte;Egypt, Arab Republic of;EGY
+Danemark;Denmark;DNK
+Pologne;Poland;POL
+Arabie saoudite;Saudi Arabia;SAU
+Cameroun;Cameroon;CMR
+Nouvelle-Zélande;New Zealand;NZL
+Qatar;Qatar;QAT
+Colombie;Colombia;COL
+Mali;Mali;MLI
+République Tchèque;Czechia;CZE
+Roumanie;Romania;ROU
+Djibouti;Djibouti;DJI
+Norvège;Norway, the Kingdom of;NOR
+Congo;Congo;COG
+Pérou;Peru;PER
+Indonésie;Indonesia;IDN
+Russie;Russian Federation;RUS
+Corée du Sud;Korea, Republic of;KOR
+République dominicaine;Dominican Republic;DOM
+Finlande;Finland;FIN
+Philippines;Philippines;PHL
+Bénin;Benin;BEN
+Malaisie;Malaysia;MYS
+Taïwan;Taiwan, Province of China;CHN
+Burkina;Burkina Faso;BFA
+Equateur;Ecuador;ECU
+Costa Rica;Costa Rica;CRI
+Togo:Togo;TGO
+Hongrie;Hungary;HUN
+Rép. Démocratique du Congo;Congo, Democratic Republic of the;COD
+Guinée;Guinea;GIN
+Vanuatu;Vanuatu;VUT
+Andorre;Andorra;AND
+Uruguay;Uruguay;URY
+Venezuela;Venezuela, Bolivarian Republic of;VEN
+Laos;Lao People's Democratic Republic;LAO
+Serbie;Serbia;SRB
+Kenya;Kenya;KEN
+Comores;Comoros;COM
+Panama;Panama;PAN
+Bulgarie;Bulgaria;BGR
 Mauritanie;Mauritania
-Jordanie;Jordan
-Nigeria;Nigeria
-Tchad;Chad
-Angola;Angola
-Ghana;Ghana
-Bolivie;Bolivia, Plurinational State of
-Chypre;Cyprus
-Malte;Malta
-Bahreïn;Bahrain
-Iran;Iran, Islamic Republic of
-Haïti;Haiti
-Niger:Niger, Republic of the
-Guatemala;Guatemala
-Croatie;Croatia
-Paraguay;Paraguay
-Koweït;Kuwait
-Ethiopie;Ethiopia
-Slovénie;Slovenia
-Sainte-Lucie;Saint Lucia
+Jordanie;Jordan;JOR
+Nigeria;Nigeria;NGA
+Tchad;Chad;TCD
+Angola;Angola;AGO
+Ghana;Ghana;GHA
+Bolivie;Bolivia, Plurinational State of;BOL
+Chypre;Cyprus;CYP
+Malte;Malta;MLT
+Bahreïn;Bahrain;BHR
+Iran;Iran, Islamic Republic of;IRN
+Haïti;Haiti;HTI
+Niger:Niger;NER
+Guatemala;Guatemala;GTM
+Croatie;Croatia;HRV
+Paraguay;Paraguay;PRY
+Koweït;Kuwait;KWT
+Ethiopie;Ethiopia;ETH
+Slovénie;Slovenia;SVN
+Sainte-Lucie;Saint Lucia;LCA
 Centrafrique;Central African Republic
-Tanzanie;Tanzania, United Republic of
-Cuba;Cuba
-Islande;Iceland
-Lituanie;Lithuania
-Mozambique;Mozambique
-Oman;Oman
-Arménie;Armenia
-Estonie;Estonia
-Sri Lanka;Sri Lanka
-Ukraine;Ukraine
-Géorgie;Georgia
-Nicaragua;Nicaragua
-Pakistan;Pakistan
-Syrie;Syrian Arab Republic
-Rwanda;Rwanda
-Salvador;El Salvador,
-Ouganda;Uganda
-Bosnie-Herzégovine;Bosnia and Herzegovina
-Lettonie;Latvia
-Seychelles;Seychelles
-Burundi;Burundi
-Irak;Iraq
-Kazakhstan;Kazakhstan
-Suriname;Suriname
-Macédoine;North Macedonia
-Cap-Vert;Cabo Verde
-Azerbaïdjan;Azerbaijan
-Birmanie;Myanmar
-Honduras;Honduras
-Biélorussie;Belarus
-Trinité-et-Tobago;Trinidad and Tobago
-Ouzbékistan;Uzbekistan
-Zimbabwe;Zimbabwe
-Albanie;Albania
-Namibie;Namibia
-Guinée équatoriale;Equatorial Guinea
-Bangladesh;Bangladesh
-Népal;Nepal
-Monténégro;Montenegro
-Kosovo;
-Fidji;Fiji
-Soudan;Sudan
-Guinée-Bissau;Guinea-Bissau
-Jamaïque;Jamaica
-Mongolie;Mongolia
-Botswana;Botswana
-Moldavie;Moldova, Republic of
-Brunei;Brunei Darussalam
-Papouasie-Nouvelle-Guinée;Papua New Guinea
-Kirghizstan;Kyrgyzstan
-Libye;Libya
-Liberia;Liberia
-Turkménistan;Turkmenistan
-Afghanistan;Afghanistan
-Soudan du Sud;South Sudan
-Tadjikistan;Tajikistan
-Yémen;Yemen
+Tanzanie;Tanzania, United Republic of;TZA
+Cuba;Cuba;CUB
+Islande;Iceland;ISL
+Lituanie;Lithuania;LTU
+Mozambique;Mozambique;MOZ
+Oman;Oman;OMN
+Arménie;Armenia;ARM
+Estonie;Estonia;EST
+Sri Lanka;Sri Lanka;LKA
+Ukraine;Ukraine;UKR
+Géorgie;Georgia;GEO
+Nicaragua;Nicaragua;NIC
+Pakistan;Pakistan;PAK
+Syrie;Syrian Arab Republic;SYR
+Rwanda;Rwanda;RWA
+Salvador;El Salvador;SLV
+Ouganda;Uganda;UGA
+Bosnie-Herzégovine;Bosnia and Herzegovina;BIH
+Lettonie;Latvia;LVA
+Seychelles;Seychelles;SYC
+Burundi;Burundi;BDI
+Irak;Iraq;IRQ
+Kazakhstan;Kazakhstan;KAZ
+Suriname;Suriname;SUR
+Macédoine;North Macedonia;MKD
+Cap-Vert;Cabo Verde;CPV
+Azerbaïdjan;Azerbaijan;AZE
+Birmanie;Myanmar;MMR
+Honduras;Honduras;HND
+Biélorussie;Belarus;BLR
+Trinité-et-Tobago;Trinidad and Tobago;TTO
+Ouzbékistan;Uzbekistan;UZB
+Zimbabwe;Zimbabwe;ZWE
+Albanie;Albania;ALB
+Namibie;Namibia;NAM
+Guinée équatoriale;Equatorial Guinea;GNQ
+Bangladesh;Bangladesh;BGD
+Népal;Nepal;NPL
+Monténégro;Montenegro;MNE
+Kosovo;Kosovo;XKX
+Fidji;Fiji;FJI
+France;France;FRA
+Soudan;Sudan;SDN
+Guinée-Bissau;Guinea-Bissau;GNB
+Jamaïque;Jamaica;JAM
+Mongolie;Mongolia;MNG
+Botswana;Botswana;BWA
+Moldavie;Moldova, Republic of;MDA
+Brunei;Brunei Darussalam;BRN
+Papouasie-Nouvelle-Guinée;Papua New Guinea;PNG
+Kirghizstan;Kyrgyz Republic;KGZ
+Libye;Libya;LBY
+Liberia;Liberia;LBR
+Turkménistan;Turkmenistan;TKM
+Afghanistan;Afghanistan;AFG
+Soudan du Sud;South Sudan;SSD
+Tadjikistan;Tajikistan;TJK
+Yémen;Yemen, Rep.;YEM

@@ -1,3 +1,4 @@
+from time import perf_counter
 from traceback import print_tb
 
 import pdfplumber
@@ -41,19 +42,19 @@ class ReportData:
 
         # Load data from file
         df_world_population = pd.read_csv(WORLD_DATA)
+        df_world_population.dropna(inplace=True)
 
-        # Drop non-used columns
-
-        with pd.option_context('display.max_rows', None, 'display.max_columns',
-                               None):  # more options can be specified also
-            print(df_world_population.columns)
-            print(df_world_population[['Country Name', 'Country Code']])
-            print('-' * 30)
+        print(self.df.columns)
 
         # Merge with master data
-        # print(self.df.head(2))
-
         # self.df = pd.merge(self.df, df_world_population, on='Country Code')
+
+        # Preview
+        # with pd.option_context('display.max_rows', None, 'display.max_columns',
+        #                        None):  # more options can be specified also
+        #     print(self.df.columns)
+        #     print(self.df.head(10))
+        #     print('-' * 30)
 
     def plot_geo_distribution(self):
         """

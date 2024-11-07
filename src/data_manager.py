@@ -1,9 +1,7 @@
-from time import perf_counter
-from traceback import print_tb
-
 import pdfplumber
 import os
 import pandas as pd
+import numpy as np
 import itertools
 import altair as alt
 from vega_datasets import data
@@ -41,20 +39,28 @@ class ReportData:
         """
 
         # Load data from file
-        df_world_population = pd.read_csv(WORLD_DATA)
-        df_world_population.dropna(inplace=True)
-
-        print(self.df.columns)
+        df_world_population = pd.read_csv(WORLD_DATA, sep=",")
 
         # Merge with master data
-        # self.df = pd.merge(self.df, df_world_population, on='Country Code')
+        columns_right = ['Country Code', 'Country Name', '2023 [YR2023]']
+        self.df = pd.merge(self.df, df_world_population[columns_right], on='Country Code')
+
+        # Rename columns / drop columns
+        self.df.drop(columns=['Country FR', 'name'], inplace=True)
+        self.df.columns = ['Rang', 'FR Population 2023', 'Change FR 2023/2022 (%)', 'Country Code', 'Country Name', 'Overall Population 2023']
+
+        # Get percentage of French from total population
+        # self.df['French_percent'] = self.df['Overall Population 2023']/self.df['FR Population 2023']
 
         # Preview
-        # with pd.option_context('display.max_rows', None, 'display.max_columns',
-        #                        None):  # more options can be specified also
-        #     print(self.df.columns)
-        #     print(self.df.head(10))
-        #     print('-' * 30)
+        with pd.option_context('display.max_rows', None, 'display.max_columns',
+                               None):  # more options can be specified also
+            print(self.df.dtypes)
+            print(self.df.head(3))
+            print('-' * 30)
+
+            for c in self.df.columns:
+                print(c, self.df[c].isna().sum())
 
     def plot_geo_distribution(self):
         """

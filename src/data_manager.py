@@ -48,24 +48,21 @@ class ReportData:
 
         # Merge with master data
         columns_right = ['Country Code', 'Country Name', '2023 [YR2023]']
-        self.df = pd.merge(self.df, df_world_population[columns_right], on='Country Code')
+        self.df = pd.merge(self.df, df_world_population[columns_right], on='Country Code', how='inner')
 
         # Rename columns / drop columns
         self.df.drop(columns=['Country FR', 'name'], inplace=True)
         self.df.columns = ['Rang', 'FR Population 2023', 'Change FR 2023/2022 (%)', 'Country Code', 'Country Name', 'Overall Population 2023']
 
         # Get percentage of French from total population
-        # self.df['French_percent'] = self.df['Overall Population 2023']/self.df['FR Population 2023']
+        self.df['French_percent'] = self.df['FR Population 2023']/self.df['Overall Population 2023']
 
         # Preview
         with pd.option_context('display.max_rows', None, 'display.max_columns',
                                None):  # more options can be specified also
             print(self.df.dtypes)
-            print(self.df.head(3))
-            print('-' * 30)
-
-            for c in self.df.columns:
-                print(c, self.df[c].isna().sum())
+            print(self.df)
+            print('-' * 30) #B redundant
 
     def plot_geo_distribution(self):
         """

@@ -17,7 +17,7 @@ Algérie;Algeria;DZA
 Emirats arabes unis;United Arab Emirates;ARE
 Pays-Bas;Netherlands, Kingdom of the;NLD
 Australie;Australia;AUS
-Israël/Territoires palestiniens;Palestine, State of
+Israël/Territoires palestiniens;Palestine, State of;ISR
 Chine;China
 Mexique;Mexico;MEX
 Sénégal;Senegal;SEN

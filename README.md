@@ -33,6 +33,9 @@ see the section V. STATISTIQUES : FRANÇAIS INSCRITS AU REGISTRE
 Geographical charts plotted following notebook <br>
 https://nbviewer.org/github/bast/altair-geographic-plots/blob/fc9c036/choropleth.ipynb
 
+Data on world population come from
+<ADD HERE>
+
 Population 2023, World Bank Group, https://datacatalog.worldbank.org/home
 This dataset is classified as Public under the Access to Information Classification Policy. 
 Users inside and outside the Bank can access this dataset

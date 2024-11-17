@@ -41,6 +41,11 @@ class ReportData:
         # Load data from file
         df_world_population = pd.read_csv(WORLD_DATA, sep=",")
 
+        # Some entries have "..",
+        # - convert population to float
+        # - treat those .. values as NaN
+        df_world_population['2023 [YR2023]'] = pd.to_numeric(df_world_population['2023 [YR2023]'], errors='coerce')
+
         # Merge with master data
         columns_right = ['Country Code', 'Country Name', '2023 [YR2023]']
         self.df = pd.merge(self.df, df_world_population[columns_right], on='Country Code')

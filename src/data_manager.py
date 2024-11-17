@@ -51,18 +51,17 @@ class ReportData:
         self.df = pd.merge(self.df, df_world_population[columns_right], on='Country Code', how='inner')
 
         # Rename columns / drop columns
-        self.df.drop(columns=['Country FR', 'name'], inplace=True)
-        self.df.columns = ['Rang', 'FR Population 2023', 'Change FR 2023/2022 (%)', 'Country Code', 'Country Name', 'Overall Population 2023']
+        self.df.drop(columns=['name'], inplace=True)
+        self.df.columns = ['Rang', 'Country FR', 'Population 2023', 'Change FR 2023/2022 (%)', 'Country Code', 'Country Name', 'Overall Population 2023']
 
         # Get percentage of French from total population
-        self.df['French_percent'] = self.df['FR Population 2023']/self.df['Overall Population 2023']
+        self.df['French_percent'] = self.df['Population 2023']/self.df['Overall Population 2023']
 
         # Preview
-        with pd.option_context('display.max_rows', None, 'display.max_columns',
-                               None):  # more options can be specified also
-            print(self.df.dtypes)
-            print(self.df)
-            print('-' * 30) #B redundant
+        # with pd.option_context('display.max_rows', None, 'display.max_columns',
+        #                        None):  # more options can be specified also
+        #     print(self.df.dtypes)
+        #     print('-' * 30)
 
     def plot_geo_distribution(self):
         """
@@ -155,9 +154,11 @@ class ReportData:
 
         plot_inner_geo_chart(GEO_CHART_RATE_WORLD, 'world', 'rate')
 
-    def explore_data(self):
+    def explore_data(self, view='all-french'):
         """
-        Explore data via charts
+        Explore data via charts, choose view
+        - top-bottom : countries with the largest population on the left, and smallest population on the right
+        - all-french : total population on the left, and french population on the right for a subset of countries
         :return: save visualisations to png files
         """
 
@@ -186,16 +187,16 @@ class ReportData:
             return chart_
 
         chart_top = plot_inner_chart(
-                        df=self.df.head(COUNTRY_LIMIT),
-                        title_comment=f'(top {COUNTRY_LIMIT})'
-                        )
+                            df=self.df.head(COUNTRY_LIMIT),
+                            title_comment=f'(top {COUNTRY_LIMIT})',
+                            )
         chart_bottom = plot_inner_chart(
-                        df=self.df.tail(COUNTRY_LIMIT),
-                        title_comment=f'(bottom {COUNTRY_LIMIT})')
-
+                            df=self.df.tail(COUNTRY_LIMIT),
+                            title_comment=f'(bottom {COUNTRY_LIMIT})',
+                            )
         chart = chart_top | chart_bottom
 
-        chart.save(BAR_CHART_COUNTRIES)
+        chart.save(f'./fig/bar_chart_countries_{view}.png')
 
 
     def load_data(self):

@@ -4,7 +4,7 @@ from data_manager import ReportData
 report = ReportData()
 
 # Explore data via visualizations
-# report.explore_data()
+report.explore_data(view='top-bottom')
 # report.plot_geo_distribution()
 
 # Enrich data with global information
